@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "new_fidelizme",
-    "slug": "new_fidelizme",
+    "name": "fidelizMe",
+    "slug": "fidelizme",
+    "scheme": "fidelizme",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "newfidelizme",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.silverstone217.fidelizme"
     },
     "web": {
       "bundler": "metro",
@@ -31,12 +32,18 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#4f90e0"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "2d544ce3-682f-4982-a44b-bda0459cbb66"
+      }
     }
   }
 }
