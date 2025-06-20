@@ -64,20 +64,10 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const { user } = useUserStore();
-  if (!user) {
-    return (
-      <>
-        <Stack initialRouteName="index">
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-        </Stack>
-        <StatusBar style="auto" animated />
-      </>
-    );
-  }
 
   return (
     <>
-      <Stack initialRouteName="home">
+      <Stack>
         <Stack.Protected guard={!user}>
           <Stack.Screen name="index" options={{ headerShown: false }} />
         </Stack.Protected>
