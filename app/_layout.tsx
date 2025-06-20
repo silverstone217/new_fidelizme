@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { primary } from "../constants/Colors";
 import { useUserStore } from "../lib/store";
@@ -18,39 +18,38 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const { user, setUser } = useUserStore();
-  const [isFirstTimeLoaded, setIsFirstTimeLoaded] = useState(false);
+  const { setUser } = useUserStore();
 
   useEffect(() => {
-    if (error) throw error;
+    if (error) {
+      console.error("Font loading error:", error);
+      SplashScreen.hideAsync();
+    }
   }, [error]);
 
   useLayoutEffect(() => {
     const loadData = async () => {
-      const getUser = async () => {
+      try {
         const value = (await getData("user")) as UserType;
-        if (value === null) {
-          setUser(null);
-        } else {
-          setUser(value as UserType);
-        }
-        setIsFirstTimeLoaded(true);
-      };
-      await getUser();
+        setUser(value ?? null);
+        // console.log("User loaded:", value);
+      } catch (e) {
+        console.error("Failed to load user:", e);
+        setUser(null);
+      }
     };
-
     loadData();
-  }, []);
+  }, [setUser]);
 
   useEffect(() => {
-    if (loaded && isFirstTimeLoaded) {
+    if (loaded) {
       setTimeout(() => {
         SplashScreen.hideAsync();
       }, 500); // Réduisez le délai
     }
-  }, [loaded, isFirstTimeLoaded]);
+  }, [loaded]);
 
-  if (!loaded || !isFirstTimeLoaded) {
+  if (!loaded) {
     // Affichez un écran de chargement
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -67,8 +66,8 @@ function RootLayoutNav() {
 
   return (
     <>
-      <Stack>
-        <Stack.Protected guard={!user}>
+      <Stack initialRouteName={user ? "home" : "index"}>
+        <Stack.Protected guard={user === null}>
           <Stack.Screen name="index" options={{ headerShown: false }} />
         </Stack.Protected>
 

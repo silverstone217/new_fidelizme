@@ -1,3 +1,7 @@
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { Redirect, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
 import {
   Alert,
   Pressable,
@@ -6,15 +10,11 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
-import { useUserStore } from "../lib/store";
-import { Redirect, useRouter } from "expo-router";
-import { clearData } from "../utils/functions";
-import { TextSize } from "../constants/Size";
-import { primary } from "../constants/Colors";
-import { StatusBar } from "expo-status-bar";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import QrCodeSvg from "../components/QrCodeSvg";
+import { primary } from "../constants/Colors";
+import { TextSize } from "../constants/Size";
+import { useUserStore } from "../lib/store";
+import { clearData } from "../utils/functions";
 
 const DATE = new Date().getFullYear();
 
@@ -50,6 +50,7 @@ const HomeScreen = () => {
   if (!user) {
     return <Redirect href="/" />;
   }
+
   return (
     <ScrollView contentContainerStyle={{ flex: 1 }}>
       <View style={styles.container}>
